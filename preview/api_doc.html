@@ -1,0 +1,1532 @@
+<html>
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>i5ting_ztree_toc:api_doc</title>
+		<link href="toc/style/github-bf51422f4bb36427d391e4b75a1daa083c2d840e.css" media="all" rel="stylesheet" type="text/css"/>
+		<link href="toc/style/github2-d731afd4f624c99a4b19ad69f3083cd6d02b81d5.css" media="all" rel="stylesheet" type="text/css"/>
+		<link href="toc/css/zTreeStyle/zTreeStyle.css" media="all" rel="stylesheet" type="text/css"/>
+	  <style>
+		pre {
+		    counter-reset: line-numbering;
+		    border: solid 1px #d9d9d9;
+		    border-radius: 0;
+		    background: #fff;
+		    padding: 0;
+		    line-height: 23px;
+		    margin-bottom: 30px;
+		    white-space: pre;
+		    overflow-x: auto;
+		    word-break: inherit;
+		    word-wrap: inherit;
+		}
+
+		pre a::before {
+		  content: counter(line-numbering);
+		  counter-increment: line-numbering;
+		  padding-right: 1em; /* space after numbers */
+		  width: 25px;
+		  text-align: right;
+		  opacity: 0.7;
+		  display: inline-block;
+		  color: #aaa;
+		  background: #eee;
+		  margin-right: 16px;
+		  padding: 2px 10px;
+		  font-size: 13px;
+		  -webkit-touch-callout: none;
+		  -webkit-user-select: none;
+		  -khtml-user-select: none;
+		  -moz-user-select: none;
+		  -ms-user-select: none;
+		  user-select: none;
+		}
+
+		pre a:first-of-type::before {
+		  padding-top: 10px;
+		}
+
+		pre a:last-of-type::before {
+		  padding-bottom: 10px;
+		}
+
+		pre a:only-of-type::before {
+		  padding: 10px;
+		}
+
+		.highlight { background-color: #ffffcc } /* RIGHT */
+		</style>
+  </head>
+  <body>
+	  <div>
+				<div style='width:25%;'>
+						<ul id="tree" class="ztree" style='width:100%'>
+
+						</ul>
+				</div>
+        <div id='readme' style='width:70%;margin-left:20%;'>
+          	<article class='markdown-body'>
+            	<h1 id="-api-">电商移动前端API文档</h1>
+<h2 id="-">路径说明</h2>
+<ul>
+<li>基准路径为 <a href="http://ip:8888/api/public/v1">http://ip:8888/api/public/v1</a></li>
+<li><p>访问路径分为两种（其中私有路径必须登录后才可以访问）</p>
+<ul>
+<li>公开路径 <a href="http://ip:8888/api/public/v1">http://ip:8888/api/public/v1</a></li>
+<li>私有路径 <a href="http://ip:8888/api/public/v1/my">http://ip:8888/api/public/v1/my</a></li>
+</ul>
+</li>
+<li><p>登录认证模式采用jwt，实现流程为</p>
+<ol>
+<li>请求登录</li>
+<li>获取token</li>
+<li>访问有权限的路径必须把 token 放置到 http 头中<pre><code> &quot;Authorization&quot; : token
+</code></pre></li>
+<li>token 有一定有效期，如果服务器返回 token 无效则需要重新登录</li>
+</ol>
+</li>
+</ul>
+<h2 id="-">公开路径</h2>
+<h3 id="-api">主页API</h3>
+<h4 id="-">获取首页轮播图数据</h4>
+<ul>
+<li>请求路径：<a href="http://ip:8888/api/public/v1/home/swiperdata">http://ip:8888/api/public/v1/home/swiperdata</a></li>
+<li>请求方法：get</li>
+<li>响应参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>image_url</td>
+<td>轮播图地址</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: [
+        {
+            &quot;image_url&quot;: &quot;https://image3.suning.cn/uimg/cms/img/151738383270780554.jpg?from=mobile&quot;
+        },
+        {
+            &quot;image_url&quot;: &quot;https://image4.suning.cn/uimg/cms/img/151937554134486711.jpg?from=mobile&quot;
+        },
+        {
+            &quot;image_url&quot;: &quot;https://image2.suning.cn/uimg/aps/material/151939080657956233.jpg|/uimg/aps/material/151936970303149620.jpg&quot;
+        }
+    ],
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;获取成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h4 id="-">获取首页分类菜单数据</h4>
+<ul>
+<li>请求路径：<a href="http://ip:8888/api/public/v1/home/catitems">http://ip:8888/api/public/v1/home/catitems</a></li>
+<li>请求方法：get</li>
+<li>响应参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>名称</td>
+<td></td>
+</tr>
+<tr>
+<td>img</td>
+<td>分类图标</td>
+<td></td>
+</tr>
+<tr>
+<td>href</td>
+<td>跳转链接</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: [
+        {
+            &quot;name&quot;: &quot;分类&quot;,
+            &quot;img&quot;: &quot;https://image4.suning.cn/uimg/cms/img/151850586119571218.png&quot;,
+            &quot;href&quot;: &quot;/category/category.html&quot;
+        },
+        {
+            &quot;name&quot;: &quot;红孩子母婴&quot;,
+            &quot;img&quot;: &quot;https://image2.suning.cn/uimg/cms/img/151848438291975781.png?from=mobile&quot;,
+            &quot;href&quot;: &quot;/good_list/good_list.html?query=母婴&quot;
+        },
+        {
+            &quot;name&quot;: &quot;生活家电&quot;,
+            &quot;img&quot;: &quot;http://image1.suning.cn/uimg/cms/img/151848528905743417.png?from=mobile&quot;,
+            &quot;href&quot;: &quot;/good_list/good_list.html?query=家电&quot;
+        },
+        {
+            &quot;name&quot;: &quot;时尚服饰&quot;,
+            &quot;img&quot;: &quot;https://image5.suning.cn/uimg/cms/img/151848454201144206.png?from=mobile&quot;,
+            &quot;href&quot;: &quot;/good_list/good_list.html?query=服装&quot;
+        },
+        {
+            &quot;name&quot;: &quot;爆款手机&quot;,
+            &quot;img&quot;: &quot;https://image5.suning.cn/uimg/cms/img/151848471513191634.png?from=mobile&quot;,
+            &quot;href&quot;: &quot;/good_list/good_list.html?query=手机&quot;
+        },
+        {
+            &quot;name&quot;: &quot;会员&quot;,
+            &quot;img&quot;: &quot;https://image4.suning.cn/uimg/cms/img/151848501127168581.png?from=mobile&quot;,
+            &quot;href&quot;: &quot;/me/me.html&quot;
+        },
+        {
+            &quot;name&quot;: &quot;红孩子母婴&quot;,
+            &quot;img&quot;: &quot;https://image2.suning.cn/uimg/cms/img/151848438291975781.png?from=mobile&quot;,
+            &quot;href&quot;: &quot;/good_list/good_list.html?query=母婴&quot;
+        },
+        {
+            &quot;name&quot;: &quot;生活家电&quot;,
+            &quot;img&quot;: &quot;http://image1.suning.cn/uimg/cms/img/151848528905743417.png?from=mobile&quot;,
+            &quot;href&quot;: &quot;/good_list/good_list.html?query=家电&quot;
+        },
+        {
+            &quot;name&quot;: &quot;时尚服饰&quot;,
+            &quot;img&quot;: &quot;https://image5.suning.cn/uimg/cms/img/151848454201144206.png?from=mobile&quot;,
+            &quot;href&quot;: &quot;/good_list/good_list.html?query=服装&quot;
+        },
+        {
+            &quot;name&quot;: &quot;爆款手机&quot;,
+            &quot;img&quot;: &quot;https://image5.suning.cn/uimg/cms/img/151848471513191634.png?from=mobile&quot;,
+            &quot;href&quot;: &quot;/good_list/good_list.html?query=手机&quot;
+        }
+    ],
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;获取成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h4 id="-">获取首页商品列表数据</h4>
+<ul>
+<li>请求路径：<a href="http://ip:8888/api/public/v1/home/goodslist">http://ip:8888/api/public/v1/home/goodslist</a></li>
+<li>请求方法：get</li>
+<li>响应参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>group_img</td>
+<td>组头图片路径</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_id</td>
+<td>商品ID</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_name</td>
+<td>商品名称</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_price</td>
+<td>商品价格</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_big_logo</td>
+<td>商品大尺寸图片路径</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_small_logo</td>
+<td>商品小尺寸图片路径</td>
+<td></td>
+</tr>
+<tr>
+<td>cat_id</td>
+<td>商品分类ID</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: [
+        {
+            &quot;group_img&quot;: &quot;http://image4.suning.cn/uimg/cms/img/149559219946350066.png&quot;,
+            &quot;goods&quot;: [
+                {
+                    &quot;goods_id&quot;: 3676,
+                    &quot;goods_name&quot;: &quot;澳洲直邮 爱他美1段白金婴幼儿奶粉一段 900g*3罐&quot;,
+                    &quot;goods_price&quot;: 645,
+                    &quot;goods_big_logo&quot;: &quot;http://image5.suning.cn/uimg/b2c/newcatentries/0070089086-000000000142886480_1_800x800.jpg&quot;,
+                    &quot;goods_small_logo&quot;: &quot;http://image5.suning.cn/uimg/b2c/newcatentries/0070089086-000000000142886480_1_400x400.jpg&quot;,
+                    &quot;cat_id&quot;: 101
+                },
+                {
+                    &quot;goods_id&quot;: 40798,
+                    &quot;goods_name&quot;: &quot;MKS纳米补水仪蒸脸器 美容器便携式喷雾器冷喷机面部脸部加湿美容仪NV8058白色&quot;,
+                    &quot;goods_price&quot;: 79,
+                    &quot;goods_big_logo&quot;: &quot;http://image5.suning.cn/uimg/b2c/newcatentries/0070066578-000000000619992636_1_800x800.jpg&quot;,
+                    &quot;goods_small_logo&quot;: &quot;http://image5.suning.cn/uimg/b2c/newcatentries/0070066578-000000000619992636_1_400x400.jpg&quot;,
+                    &quot;cat_id&quot;: 528
+                },
+                {
+                    &quot;goods_id&quot;: 29894,
+                    &quot;goods_name&quot;: &quot;戴尔（DELL）灵越 13-7370-R1505S 13.3英寸轻薄笔记本电脑（i5-8250U 8G 128G）&quot;,
+                    &quot;goods_price&quot;: 6499,
+                    &quot;goods_big_logo&quot;: &quot;http://image5.suning.cn/uimg/b2c/newcatentries/0000000000-000000000666371042_1_800x800.jpg&quot;,
+                    &quot;goods_small_logo&quot;: &quot;http://image5.suning.cn/uimg/b2c/newcatentries/0000000000-000000000666371042_1_400x400.jpg&quot;,
+                    &quot;cat_id&quot;: 283
+                },
+                {
+                    &quot;goods_id&quot;: 43555,
+                    &quot;goods_name&quot;: &quot;象印(ZO JIRUSHI)保温杯SM-AGE50进口不锈钢双层真空保冷保温瓶 情侣水杯子500ml TD深棕色 深棕色&quot;,
+                    &quot;goods_price&quot;: 269,
+                    &quot;goods_big_logo&quot;: &quot;http://image5.suning.cn/uimg/b2c/newcatentries/0000000000-000000000619550979_2_800x800.jpg&quot;,
+                    &quot;goods_small_logo&quot;: &quot;http://image5.suning.cn/uimg/b2c/newcatentries/0000000000-000000000619550979_2_400x400.jpg&quot;,
+                    &quot;cat_id&quot;: 590
+                }
+            ]
+        }
+    ],
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;获取成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h3 id="-api">商品API</h3>
+<h4 id="-">搜索建议查询</h4>
+<ul>
+<li>请求路径：<a href="http://ip:8888/api/public/v1/goods/qsearch">http://ip:8888/api/public/v1/goods/qsearch</a></li>
+<li><p>请求方法：get</p>
+</li>
+<li><p>请求参数</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>query</td>
+<td>查询内容</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>goods_id</td>
+<td>商品ID</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_name</td>
+<td>商品名称</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: [
+        {
+            &quot;goods_id&quot;: 57332,
+            &quot;goods_name&quot;: &quot;400毫升 海鲜食品冷藏冰包 注水冰袋医用冰袋户外冷藏保鲜熟食冷藏反复使用（10个装）&quot;
+        },
+        {
+            &quot;goods_id&quot;: 57194,
+            &quot;goods_name&quot;: &quot;亿力洗车工具汽车美容用品海绵刷不伤车漆擦车海棉清洁海绵&quot;
+        }
+    ],
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;获取成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h4 id="-">商品列表搜索</h4>
+<ul>
+<li>请求路径：<a href="http://ip:8888/api/public/v1/goods/search">http://ip:8888/api/public/v1/goods/search</a></li>
+<li><p>请求方法：get</p>
+</li>
+<li><p>请求参数</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>query</td>
+<td>查询关键词</td>
+<td></td>
+</tr>
+<tr>
+<td>cid</td>
+<td>分类ID</td>
+<td>可选</td>
+</tr>
+<tr>
+<td>pagenum</td>
+<td>页数索引</td>
+<td>可选默认第一页</td>
+</tr>
+<tr>
+<td>pagesize</td>
+<td>每页长度</td>
+<td>可选默认20条</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>total</td>
+<td>总共记录</td>
+<td></td>
+</tr>
+<tr>
+<td>pagenum</td>
+<td>当前页数</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_id</td>
+<td>商品ID</td>
+<td></td>
+</tr>
+<tr>
+<td>cat_id</td>
+<td>分类ID</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_name</td>
+<td>商品名称</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_price</td>
+<td>商品价格</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_number</td>
+<td>商品数量</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_weight</td>
+<td>商品重量</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_big_logo</td>
+<td>商品大图标</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_small_logo</td>
+<td>商品小图标</td>
+<td></td>
+</tr>
+<tr>
+<td>add_time</td>
+<td>商品添加时间</td>
+<td></td>
+</tr>
+<tr>
+<td>upd_time</td>
+<td>商品更新时间</td>
+<td></td>
+</tr>
+<tr>
+<td>hot_mumber</td>
+<td>热门商品数</td>
+<td></td>
+</tr>
+<tr>
+<td>cat_one_id</td>
+<td>所属一级分类</td>
+<td></td>
+</tr>
+<tr>
+<td>cat_two_id</td>
+<td>所属二级分类</td>
+<td></td>
+</tr>
+<tr>
+<td>cat_three_id</td>
+<td>所属三级分类</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+        &quot;total&quot;: 2058,
+        &quot;pagenum&quot;: &quot;1&quot;,
+        &quot;goods&quot;: [
+            {
+                &quot;goods_id&quot;: 57332,
+                &quot;cat_id&quot;: 998,
+                &quot;goods_name&quot;: &quot;400毫升 海鲜食品冷藏冰包 注水冰袋医用冰袋户外冷藏保鲜熟食冷藏反复使用（10个装）&quot;,
+                &quot;goods_price&quot;: 14,
+                &quot;goods_number&quot;: 100,
+                &quot;goods_weight&quot;: 100,
+                &quot;goods_big_logo&quot;: &quot;http://image4.suning.cn/uimg/b2c/newcatentries/0070083251-000000000168369396_1_800x800.jpg&quot;,
+                &quot;goods_small_logo&quot;: &quot;http://image4.suning.cn/uimg/b2c/newcatentries/0070083251-000000000168369396_1_400x400.jpg&quot;,
+                &quot;add_time&quot;: 1516662792,
+                &quot;upd_time&quot;: 1516662792,
+                &quot;hot_mumber&quot;: 0,
+                &quot;is_promote&quot;: false,
+                &quot;cat_one_id&quot;: 962,
+                &quot;cat_two_id&quot;: 981,
+                &quot;cat_three_id&quot;: 998
+            },
+            {
+                &quot;goods_id&quot;: 57194,
+                &quot;cat_id&quot;: 992,
+                &quot;goods_name&quot;: &quot;亿力洗车工具汽车美容用品海绵刷不伤车漆擦车海棉清洁海绵&quot;,
+                &quot;goods_price&quot;: 29,
+                &quot;goods_number&quot;: 100,
+                &quot;goods_weight&quot;: 100,
+                &quot;goods_big_logo&quot;: &quot;&quot;,
+                &quot;goods_small_logo&quot;: &quot;&quot;,
+                &quot;add_time&quot;: 1516662312,
+                &quot;upd_time&quot;: 1516662312,
+                &quot;hot_mumber&quot;: 0,
+                &quot;is_promote&quot;: false,
+                &quot;cat_one_id&quot;: 962,
+                &quot;cat_two_id&quot;: 980,
+                &quot;cat_three_id&quot;: 992
+            }
+        ]
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;获取成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h4 id="-">商品详情</h4>
+<ul>
+<li>请求路径：<a href="http://ip:8888/api/public/v1/goods/detail">http://ip:8888/api/public/v1/goods/detail</a></li>
+<li><p>请求方法：get</p>
+</li>
+<li><p>请求参数</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>goods_id</td>
+<td>商品ID</td>
+<td>必填</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>goods_id</td>
+<td>商品ID</td>
+<td></td>
+</tr>
+<tr>
+<td>cat_id</td>
+<td>分类ID</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_name</td>
+<td>商品名称</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_price</td>
+<td>商品价格</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_number</td>
+<td>商品数量</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_weight</td>
+<td>商品重量</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_big_logo</td>
+<td>商品大图标</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_small_logo</td>
+<td>商品小图标</td>
+<td></td>
+</tr>
+<tr>
+<td>add_time</td>
+<td>商品添加时间</td>
+<td></td>
+</tr>
+<tr>
+<td>upd_time</td>
+<td>商品更新时间</td>
+<td></td>
+</tr>
+<tr>
+<td>hot_mumber</td>
+<td>热门商品数</td>
+<td></td>
+</tr>
+<tr>
+<td>cat_one_id</td>
+<td>所属一级分类</td>
+<td></td>
+</tr>
+<tr>
+<td>cat_two_id</td>
+<td>所属二级分类</td>
+<td></td>
+</tr>
+<tr>
+<td>cat_three_id</td>
+<td>所属三级分类</td>
+<td></td>
+</tr>
+<tr>
+<td>goods_introduce</td>
+<td>商品介绍</td>
+<td></td>
+</tr>
+<tr>
+<td>pics</td>
+<td>商品图片列表</td>
+<td></td>
+</tr>
+<tr>
+<td>attrs</td>
+<td>商品属性列表</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+        &quot;goods_id&quot;: 57332,
+        &quot;cat_id&quot;: 998,
+        &quot;goods_name&quot;: &quot;400毫升 海鲜食品冷藏冰包 注水冰袋医用冰袋户外冷藏保鲜熟食冷藏反复使用（10个装）&quot;,
+        &quot;goods_price&quot;: 14,
+        &quot;goods_number&quot;: 100,
+        &quot;goods_weight&quot;: 100,
+        &quot;goods_introduce&quot;: &quot;&lt;div class=\&quot;lazyimg\&quot;&gt;&lt;!-- Save for Web Slices (20170730关联模板.psd) --&gt;\n&lt;p&gt;&lt;img data-src=\&quot;//image.suning.cn/uimg/sop/commodity/167890268714163515505319_x.jpg?from=mobile&amp;amp;format=80q.webp\&quot; alt=\&quot;\&quot; usemap=\&quot;#Map\&quot; border=\&quot;0\&quot; src=\&quot;//image.suning.cn/uimg/sop/commodity/167890268714163515505319_x.jpg?from=mobile&amp;format=80q.webp\&quot; width=\&quot;100%\&quot; height=\&quot;auto\&quot;&gt; &lt;/p&gt;\n&lt;!-- End Save for Web Slices --&gt;&lt;p&gt;&lt;/p&gt;&lt;p&gt;&lt;img picsize=\&quot;706KB\&quot; data-src=\&quot;//image.suning.cn/uimg/sop/phonecomm/157271695856956094412300_640x.jpg?from=mobile&amp;amp;format=80q.webp\&quot; alt=\&quot;\&quot; src=\&quot;//image.suning.cn/uimg/sop/phonecomm/157271695856956094412300_640x.jpg?from=mobile&amp;format=80q.webp\&quot; width=\&quot;100%\&quot; height=\&quot;auto\&quot;&gt;&lt;/p&gt;&lt;p&gt;&lt;img picsize=\&quot;610KB\&quot; data-src=\&quot;//image.suning.cn/uimg/sop/phonecomm/192892939814201549766135_640x.jpg?from=mobile&amp;amp;format=80q.webp\&quot; alt=\&quot;\&quot; src=\&quot;//image.suning.cn/uimg/sop/phonecomm/192892939814201549766135_640x.jpg?from=mobile&amp;format=80q.webp\&quot; width=\&quot;100%\&quot; height=\&quot;auto\&quot;&gt;&lt;/p&gt;&lt;/div&gt;&quot;,
+        &quot;goods_big_logo&quot;: &quot;http://image4.suning.cn/uimg/b2c/newcatentries/0070083251-000000000168369396_1_800x800.jpg&quot;,
+        &quot;goods_small_logo&quot;: &quot;http://image4.suning.cn/uimg/b2c/newcatentries/0070083251-000000000168369396_1_400x400.jpg&quot;,
+        &quot;goods_state&quot;: 2,
+        &quot;is_del&quot;: &quot;0&quot;,
+        &quot;add_time&quot;: 1516662792,
+        &quot;upd_time&quot;: 1516662792,
+        &quot;delete_time&quot;: null,
+        &quot;hot_mumber&quot;: 0,
+        &quot;is_promote&quot;: false,
+        &quot;cat_one_id&quot;: 962,
+        &quot;cat_two_id&quot;: 981,
+        &quot;cat_three_id&quot;: 998,
+        &quot;goods_cat&quot;: &quot;962,981,998&quot;,
+        &quot;pics&quot;: [
+            {
+                &quot;pics_id&quot;: 234751,
+                &quot;goods_id&quot;: 57332,
+                &quot;pics_big&quot;: &quot;http://image4.suning.cn/uimg/b2c/newcatentries/0070083251-000000000168369396_1_800x800.jpg&quot;,
+                &quot;pics_mid&quot;: &quot;http://image4.suning.cn/uimg/b2c/newcatentries/0070083251-000000000168369396_1_400x400.jpg&quot;,
+                &quot;pics_sma&quot;: &quot;http://image4.suning.cn/uimg/b2c/newcatentries/0070083251-000000000168369396_1_200x200.jpg&quot;,
+                &quot;pics_big_url&quot;: &quot;http://image4.suning.cn/uimg/b2c/newcatentries/0070083251-000000000168369396_1_800x800.jpg&quot;,
+                &quot;pics_mid_url&quot;: &quot;http://image4.suning.cn/uimg/b2c/newcatentries/0070083251-000000000168369396_1_400x400.jpg&quot;,
+                &quot;pics_sma_url&quot;: &quot;http://image4.suning.cn/uimg/b2c/newcatentries/0070083251-000000000168369396_1_200x200.jpg&quot;
+            }
+        ],
+        &quot;attrs&quot;: [
+            {
+                &quot;goods_id&quot;: 57332,
+                &quot;attr_id&quot;: 8519,
+                &quot;attr_value&quot;: &quot;400&quot;,
+                &quot;add_price&quot;: 0,
+                &quot;attr_name&quot;: &quot;主体-型号&quot;,
+                &quot;attr_sel&quot;: &quot;only&quot;,
+                &quot;attr_write&quot;: &quot;manual&quot;,
+                &quot;attr_vals&quot;: &quot;Q6&quot;
+            }
+        ]
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;获取成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h3 id="-api">分类API</h3>
+<h4 id="-">获取分类数据</h4>
+<ul>
+<li>请求路径：<a href="http://ip:8888/api/public/v1/categories">http://ip:8888/api/public/v1/categories</a></li>
+<li>请求方法：get</li>
+<li>响应参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cat_id</td>
+<td>分类ID</td>
+<td></td>
+</tr>
+<tr>
+<td>cat_name</td>
+<td>分类名称</td>
+<td></td>
+</tr>
+<tr>
+<td>cat_level</td>
+<td>分类级别</td>
+<td></td>
+</tr>
+<tr>
+<td>cat_icon</td>
+<td>分类图标</td>
+<td>只有3级别分类采用图标</td>
+</tr>
+<tr>
+<td>children</td>
+<td>子分类列表</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: [
+        {
+            &quot;cat_id&quot;: 1,
+            &quot;cat_name&quot;: &quot;大家电&quot;,
+            &quot;cat_pid&quot;: 0,
+            &quot;cat_level&quot;: 0,
+            &quot;cat_deleted&quot;: false,
+            &quot;cat_icon&quot;: &quot;&quot;,
+            &quot;children&quot;: [
+                {
+                    &quot;cat_id&quot;: 3,
+                    &quot;cat_name&quot;: &quot;电视&quot;,
+                    &quot;cat_pid&quot;: 1,
+                    &quot;cat_level&quot;: 1,
+                    &quot;cat_deleted&quot;: false,
+                    &quot;cat_icon&quot;: &quot;&quot;,
+                    &quot;children&quot;: [
+                    {
+                        &quot;cat_id&quot;: 5,
+                        &quot;cat_name&quot;: &quot;曲面电视&quot;,
+                        &quot;cat_pid&quot;: 3,
+                        &quot;cat_level&quot;: 2,
+                        &quot;cat_deleted&quot;: false,
+                        &quot;cat_icon&quot;: &quot;full/2fb113b32f7a2b161f5ee4096c319afedc3fd5a1.jpg&quot;
+                    }]
+                }
+            ]
+        }
+    ],
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;获取成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h3 id="-api">用户API</h3>
+<h4 id="-">获取验证码</h4>
+<ul>
+<li>请求路径：<a href="http://ip:8888/api/public/v1/users/get_reg_code">http://ip:8888/api/public/v1/users/get_reg_code</a></li>
+<li><p>请求方法：post</p>
+</li>
+<li><p>请求参数</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mobile</td>
+<td>手机号</td>
+<td>必填</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>data</td>
+<td>调试模式下使用查看验证码数字，真是情况下无此参数</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: &quot;9101&quot;,
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;获取成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h4 id="-">注册</h4>
+<ul>
+<li>请求路径：<a href="http://ip:8888/api/public/v1/users/reg">http://ip:8888/api/public/v1/users/reg</a></li>
+<li><p>请求方法：post</p>
+</li>
+<li><p>请求参数</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mobile</td>
+<td>手机号</td>
+<td>必填</td>
+</tr>
+<tr>
+<td>code</td>
+<td>验证码</td>
+<td>必填</td>
+</tr>
+<tr>
+<td>email</td>
+<td>邮箱</td>
+<td>必填</td>
+</tr>
+<tr>
+<td>pwd</td>
+<td>密码</td>
+<td>必填</td>
+</tr>
+<tr>
+<td>gender</td>
+<td>性别</td>
+<td>必填</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;注册成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h4 id="-">登录</h4>
+<ul>
+<li>请求路径：<a href="http://ip:8888/api/public/v1/login">http://ip:8888/api/public/v1/login</a></li>
+<li><p>请求方法：post</p>
+</li>
+<li><p>请求参数</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>username</td>
+<td>用户名</td>
+<td>必填</td>
+</tr>
+<tr>
+<td>password</td>
+<td>密码</td>
+<td>必填</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>user_id</td>
+<td>用户ID</td>
+<td></td>
+</tr>
+<tr>
+<td>username</td>
+<td>用户名</td>
+<td></td>
+</tr>
+<tr>
+<td>user_email</td>
+<td>用户邮箱</td>
+<td></td>
+</tr>
+<tr>
+<td>user_tel</td>
+<td>用户电话</td>
+<td></td>
+</tr>
+<tr>
+<td>token</td>
+<td>全局token</td>
+<td></td>
+</tr>
+<tr>
+<td>mobile</td>
+<td>用户手机号</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+        &quot;user_id&quot;: 4,
+        &quot;username&quot;: &quot;12345678901&quot;,
+        &quot;qq_open_id&quot;: &quot;&quot;,
+        &quot;user_email&quot;: &quot;aa@aa.aa&quot;,
+        &quot;user_email_code&quot;: &quot;0610&quot;,
+        &quot;is_active&quot;: &quot;否&quot;,
+        &quot;user_sex&quot;: &quot;男&quot;,
+        &quot;user_qq&quot;: &quot;&quot;,
+        &quot;user_tel&quot;: &quot;12345678901&quot;,
+        &quot;user_xueli&quot;: &quot;本科&quot;,
+        &quot;user_hobby&quot;: &quot;&quot;,
+        &quot;user_introduce&quot;: null,
+        &quot;create_time&quot;: 1518416065,
+        &quot;update_time&quot;: 1518416065,
+        &quot;token&quot;: &quot;Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjQsImlhdCI6MTUyMDMwOTI3MCwiZXhwIjoxNTIwMzk1NjcwfQ.6JmXVxkQ4tjlMbjvlIdATkjMafBNf4oE1m44o8UKCl4&quot;,
+        &quot;mobile&quot;: &quot;12345678901&quot;
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;登录成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h2 id="-">私有路径</h2>
+<h3 id="-api">用户API</h3>
+<h4 id="-">获取用户信息</h4>
+<ul>
+<li>请求路径：<a href="http://ip:8888/api/public/v1/my/users/userinfo">http://ip:8888/api/public/v1/my/users/userinfo</a></li>
+<li>请求方法：get</li>
+<li>响应参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>user_id</td>
+<td>用户ID</td>
+<td></td>
+</tr>
+<tr>
+<td>username</td>
+<td>用户名</td>
+<td></td>
+</tr>
+<tr>
+<td>user_email</td>
+<td>用户邮箱</td>
+<td></td>
+</tr>
+<tr>
+<td>user_tel</td>
+<td>用户电话</td>
+<td></td>
+</tr>
+<tr>
+<td>mobile</td>
+<td>用户手机号</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+        &quot;user_id&quot;: 4,
+        &quot;username&quot;: &quot;12345678901&quot;,
+        &quot;user_email&quot;: &quot;aa@aa.aa&quot;,
+        &quot;user_email_code&quot;: &quot;0610&quot;,
+        &quot;user_sex&quot;: &quot;男&quot;,
+        &quot;user_qq&quot;: &quot;&quot;,
+        &quot;user_tel&quot;: &quot;12345678901&quot;,
+        &quot;user_xueli&quot;: &quot;本科&quot;,
+        &quot;user_hobby&quot;: &quot;&quot;,
+        &quot;user_introduce&quot;: null,
+        &quot;create_time&quot;: 1518416065,
+        &quot;update_time&quot;: 1518416065
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;获取用户信息成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h3 id="-api-">购物车API（登录后访问）</h3>
+<h4 id="-">查询购物车数据</h4>
+<ul>
+<li>请求路径：<a href="http://ip:8888/api/public/v1/my/cart/all">http://ip:8888/api/public/v1/my/cart/all</a></li>
+<li>请求方法：get</li>
+<li>响应参数</li>
+</ul>
+<pre><code class="lang-javascript">{
+  &quot;data&quot;: {
+    &quot;cart_id&quot;: 9,
+    &quot;user_id&quot;: 6,
+    &quot;cart_info&quot;: &quot;{}&quot;,
+    &quot;created_at&quot;: &quot;2018-03-30T08:19:05.000Z&quot;,
+    &quot;updated_at&quot;: &quot;2018-04-05T07:30:15.000Z&quot;,
+    &quot;delete_time&quot;: null
+  },
+  &quot;meta&quot;: {
+    &quot;msg&quot;: &quot;获取成功&quot;,
+    &quot;status&quot;: 200
+  }
+}
+</code></pre>
+<h4 id="-">购物车添加商品</h4>
+<ul>
+<li>请求路径：<a href="http://ip:8888/api/public/v1/my/cart/add">http://ip:8888/api/public/v1/my/cart/add</a></li>
+<li>请求方法：post</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>info</td>
+<td>商品对象的JSON字符串</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>请求数据<pre><code class="lang-javascript">{
+  {
+  &quot;info&quot;: &quot;{\&quot;goods_id\&quot;:43986,\&quot;cat_id\&quot;:5,\&quot;goods_name\&quot;:\&quot;海信(Hisense)LED55MU9600X3DUC 55英寸 4K超高清量子点电视 ULED画质 VIDAA系统\&quot;,\&quot;goods_price\&quot;:13999,\&quot;goods_number\&quot;:100,\&quot;goods_weight\&quot;:100}\&quot;&quot;
+  }
+}
+</code></pre>
+</li>
+<li>响应参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>user_id</td>
+<td>用户ID</td>
+<td></td>
+</tr>
+<tr>
+<td>cart_id</td>
+<td>购物车ID</td>
+<td></td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>创建时间</td>
+<td></td>
+</tr>
+<tr>
+<td>updated_at</td>
+<td>更新时间</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+        &quot;cart_id&quot;: 4,
+        &quot;cart_info&quot;: &quot;购物车商品列表集合字符串&quot;,
+        &quot;created_at&quot;: &quot;&quot;,
+        &quot;delete_time&quot;: &quot;&quot;,
+        &quot;updated_at&quot;: &quot;&quot;,
+        &quot;user_id&quot;: 6
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;添加购物车成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h4 id="-">同步购物车</h4>
+<ul>
+<li>请求路径：<a href="http://ip:8888/api/public/v1/my/cart/sync">http://ip:8888/api/public/v1/my/cart/sync</a></li>
+<li>请求方法：post</li>
+<li>请求参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>infos</td>
+<td>商品对象集合字符串</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>请求数据<pre><code class="lang-javascript">{
+  {
+  &quot;infos&quot;: &quot;商品对象集合字符串&quot;
+  }
+}
+</code></pre>
+</li>
+<li>响应参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>user_id</td>
+<td>用户ID</td>
+<td></td>
+</tr>
+<tr>
+<td>cart_id</td>
+<td>购物车ID</td>
+<td></td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>创建时间</td>
+<td></td>
+</tr>
+<tr>
+<td>updated_at</td>
+<td>更新时间</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+        &quot;cart_id&quot;: 4,
+        &quot;cart_info&quot;: &quot;购物车商品列表集合字符串&quot;,
+        &quot;created_at&quot;: &quot;&quot;,
+        &quot;delete_time&quot;: &quot;&quot;,
+        &quot;updated_at&quot;: &quot;&quot;,
+        &quot;user_id&quot;: 6
+    },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;同步更新成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h3 id="-api">订单API</h3>
+<h4 id="-">创建订单</h4>
+<ul>
+<li>请求路径：<a href="http://ip:8888/api/public/v1/orders/create">http://ip:8888/api/public/v1/orders/create</a></li>
+<li><p>请求方法：post</p>
+</li>
+<li><p>请求参数</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>order_price</td>
+<td>订单价格</td>
+<td></td>
+</tr>
+<tr>
+<td>consignee_addr</td>
+<td>订单地址</td>
+<td></td>
+</tr>
+<tr>
+<td>goods</td>
+<td>商品列表内部存放商品（ID，amount和goods_price）列表</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>请求数据</p>
+<pre><code class="lang-javascript">{
+  &quot;order_price&quot;:5,
+  &quot;consignee_addr&quot;:&quot;地址&quot;,
+  &quot;goods&quot;:[
+      {
+          &quot;goods_id&quot;:5,
+          &quot;goods_number&quot;:3,
+          &quot;goods_price&quot;:15
+      }
+  ]
+}
+</code></pre>
+</li>
+<li><p>响应参数</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>order_id</td>
+<td>订单唯一ID</td>
+<td></td>
+</tr>
+<tr>
+<td>user_id</td>
+<td>用户ID</td>
+<td></td>
+</tr>
+<tr>
+<td>order_number</td>
+<td>订单编号</td>
+<td></td>
+</tr>
+<tr>
+<td>order_price</td>
+<td>订单价格</td>
+<td></td>
+</tr>
+<tr>
+<td>order_pay</td>
+<td>订单支付方式</td>
+<td></td>
+</tr>
+<tr>
+<td>consignee_addr</td>
+<td>订单地址</td>
+<td></td>
+</tr>
+<tr>
+<td>pay_status</td>
+<td>订单支付状态</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: {
+            &quot;order_id&quot;: 3,
+            &quot;user_id&quot;: 4,
+            &quot;order_number&quot;: &quot;itcast-g7kmckiwpje0knron&quot;,
+            &quot;order_price&quot;: 52893,
+            &quot;order_pay&quot;: &quot;0&quot;,
+            &quot;is_send&quot;: &quot;否&quot;,
+            &quot;trade_no&quot;: &quot;&quot;,
+            &quot;order_fapiao_title&quot;: &quot;个人&quot;,
+            &quot;order_fapiao_company&quot;: &quot;&quot;,
+            &quot;order_fapiao_content&quot;: &quot;&quot;,
+            &quot;consignee_addr&quot;: &quot;上海市浦东新区航都路18号&quot;,
+            &quot;pay_status&quot;: &quot;1&quot;,
+            &quot;create_time&quot;: 1519428771,
+            &quot;update_time&quot;: 1519428771
+        },
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;&quot;创建订单成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+<h4 id="-">订单查询</h4>
+<ul>
+<li>请求路径：<a href="http://ip:8888/api/public/v1/orders/all">http://ip:8888/api/public/v1/orders/all</a></li>
+<li><p>请求方法：get</p>
+</li>
+<li><p>请求参数</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td>1,2,3</td>
+<td>1:全部订单 2:待付款 3:待发货</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>order_id</td>
+<td>订单唯一ID</td>
+<td></td>
+</tr>
+<tr>
+<td>user_id</td>
+<td>用户ID</td>
+<td></td>
+</tr>
+<tr>
+<td>order_number</td>
+<td>订单编号</td>
+<td></td>
+</tr>
+<tr>
+<td>order_price</td>
+<td>订单价格</td>
+<td></td>
+</tr>
+<tr>
+<td>order_pay</td>
+<td>订单支付方式</td>
+<td></td>
+</tr>
+<tr>
+<td>consignee_addr</td>
+<td>订单地址</td>
+<td></td>
+</tr>
+<tr>
+<td>pay_status</td>
+<td>订单支付状态</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>响应数据</li>
+</ul>
+<pre><code class="lang-javascript">{
+    &quot;data&quot;: [
+        {
+            &quot;order_id&quot;: 3,
+            &quot;user_id&quot;: 4,
+            &quot;order_number&quot;: &quot;itcast-g7kmckiwpje0knron&quot;,
+            &quot;order_price&quot;: 52893,
+            &quot;order_pay&quot;: &quot;0&quot;,
+            &quot;is_send&quot;: &quot;否&quot;,
+            &quot;trade_no&quot;: &quot;&quot;,
+            &quot;order_fapiao_title&quot;: &quot;个人&quot;,
+            &quot;order_fapiao_company&quot;: &quot;&quot;,
+            &quot;order_fapiao_content&quot;: &quot;&quot;,
+            &quot;consignee_addr&quot;: &quot;上海市浦东新区航都路18号&quot;,
+            &quot;pay_status&quot;: &quot;1&quot;,
+            &quot;create_time&quot;: 1519428771,
+            &quot;update_time&quot;: 1519428771
+        }
+    ],
+    &quot;meta&quot;: {
+        &quot;msg&quot;: &quot;获取订单列表成功&quot;,
+        &quot;status&quot;: 200
+    }
+}
+</code></pre>
+
+          	</article>
+        </div>
+		</div>
+  </body>
+</html>
+<script type="text/javascript" src="toc/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="toc/js/jquery.ztree.all-3.5.min.js"></script>
+<script type="text/javascript" src="toc/js/ztree_toc.js"></script>
+<script type="text/javascript" src="toc_conf.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+    var css_conf = eval(markdown_panel_style);
+    $('#readme').css(css_conf)
+    
+    var conf = eval(jquery_ztree_toc_opts);
+		$('#tree').ztree_toc(conf);
+});
+//-->
+</SCRIPT>
