@@ -1,3 +1,14 @@
-body {
-  color: yellow;
+.bar-header-secondary {
+  top: 0;
+}
+.bar-header-secondary ~ .content {
+  top: 1.4rem;
+}
+.swiper-container {
+  width: 100%;
+  height: 8rem;
+}
+.swiper-container img {
+  width: 100%;
+  height: auto;
 }
