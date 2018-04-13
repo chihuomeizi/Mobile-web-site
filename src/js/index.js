@@ -1,6 +1,20 @@
 $(function(){
 
-//菜单处理
+// 3. 商品列表
+function loadListData(){
+  return axios.get('home/goodslist');
+}
+function renderList(paramData){
+  return new Promise(function(resolve,reject){
+   let text = template('listTpl',paramData.data);
+   $('#listInfo').html(text);
+    resolve();
+  })
+}
+
+
+
+//2.菜单处理
 function loadMenuData(){
   return axios.get('home/catitems');
 }
@@ -14,7 +28,7 @@ function renderMenu(paramData){
 }
  
 
- //轮播图
+ //1.轮播图
  //获取轮播图的数据
  function loadSwiperData(){
   return axios.get('home/swiperdata');
@@ -63,7 +77,17 @@ function renderMenu(paramData){
         $.toast("success");
       })
      .catch(function(){
-      $.toast("响应失败")
+      $.toast("响应失败");
+     })
+
+     //商品列表
+     loadListData()
+     .then(renderList)
+     .then(function(){
+      $.toast('success');
+     })
+     .catch(function(){
+      $.toast('响应失败');
      })
   });
   $.init();

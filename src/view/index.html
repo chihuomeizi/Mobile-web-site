@@ -36,6 +36,11 @@
              <div class="content-padded menu" id="menuInfo">
                <!-- 模板 -->
              </div>
+
+             <!-- 商品列表 -->
+             <div class="listInfo" id="listInfo">
+                    <!-- 内容列表模板 -->
+             </div>
         </div>
       </div>
    </div>
@@ -54,7 +59,7 @@
            <!-- 如果需要分页器 -->
           <div class="swiper-pagination"></div>
     </script>
-
+   <!-- 菜单列表 -->
    <script type="text/template" id="menuTpl">
        <div class="row">
          {{each list}}
@@ -73,7 +78,36 @@
          {{/each}}
          </div>
    </script>
-
+  
+    <!-- 商品列表 -->
+    <script type="text/template" id="listTpl">
+     {{each $data}}
+        <div class="content-padded list-title">
+            <img src="{{$value.group_img}}">
+          </div>
+          <div class="content-padded list-item">
+            <div class="row">
+             {{each $value.goods item}}
+                <div class="col-50">
+                <div class="pic">
+                  <img src="{{item.goods_big_logo}}">
+                </div>
+                <div class="name">{{item.goods_name}}</div>
+                <div class="price">
+                  <span>¥ {{item.goods_price}}</span>
+                  <a href="/goods-list.html?cid={{item.cat_id}}" class="button external">找相似</a>
+                </div>
+              </div>
+              {{if ($index + 1) % 2 == 0}}
+                </div>
+                 <div class="row">
+              {{/if}}
+             {{/each}}
+            </div>
+          </div>
+     {{/each}}        
+    </script>
+     
   <script type="text/javascript" src="assets/axios/axios.min.js"></script>
   <script type="text/javascript" src="assets/zepto/zepto.min.js"></script>
   <script type="text/javascript" src="assets/sui/js/sm.min.js"></script>
