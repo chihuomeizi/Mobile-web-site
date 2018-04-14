@@ -1,32 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   
     <title>我的生活</title>
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-    <link rel="shortcut icon" href="/favicon.ico">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-    <link rel="stylesheet" href="assets/sui/css/sm.min.css">
-    <link rel="stylesheet" href="assets/sui/css/sm-extend.min.css">
-    <link rel="stylesheet" href="assets/swiper/css/swiper.min.css">
+   
+       @@include("./common/meta.html")
+      @@include("./common/link.html")
      <link rel="stylesheet" href="../css/index.css">
   </head>
   <body>
     <div class="page-group">
        <div class="page page-current">
-        <!--  头部搜索框 -->
-        <div class="bar bar-header-secondary">
-        <div class="searchbar">
-          <a class="searchbar-cancel">取消</a>
-          <div class="search-input">
-            <label class="icon icon-search" for="search"></label>
-            <input type="search" id='search' placeholder='输入关键字...'/>
-          </div>
-        </div>
-       </div>
+
+        <!-- 头部搜索框 -->
+        @@include('./common/header.html')
+        <!--  底部菜单栏 -->
+          @@include('./common/menubar.html',{
+          "current":"active"
+        })
+
        <!--  轮播图 -->
         <div class="content" id="content">
            <div class="swiper-container" id="swiperinfo">
@@ -108,13 +100,8 @@
      {{/each}}        
     </script>
      
-  <script type="text/javascript" src="assets/axios/axios.min.js"></script>
-  <script type="text/javascript" src="assets/zepto/zepto.min.js"></script>
-  <script type="text/javascript" src="assets/sui/js/sm.min.js"></script>
-  <script type="text/javascript" src="assets/swiper/js/swiper.min.js"></script>
-  <script type="text/javascript" src="assets/artTemplate/template-web.js"></script>
-  <script type="text/javascript" src="../js/app.js"></script>
-  <script type="text/javascript" src="../js/index.js"></script>
+   @@include("./common/script.html")
+  <script type="text/javascript" src="js/index.js"></script>
 
   </body>
 </html>
